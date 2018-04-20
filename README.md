@@ -1,21 +1,20 @@
 # GameJam2018
 
-What:
-===
+## What:
 Public repository for the GameJam2018 project.
 
-Whom:
-===
+## Whom:
 - Eduarda Guidarini @eduardaguidarini
 - Filipe Stefano Ghisi @ghisihoward
 - Gabriel Nied @gabriel.nied.9
+- Lucas BC
 
-How:
-===
+## How:
 - C#
 - Unity
-- Cthulhu Sacrifices
+- BlitzkriegLib
+- Cthulhu sacrifices
 
-Why:
-===
-- Because we can.
+## Why:
+- Cthulhu fhtagn
+- Because we can

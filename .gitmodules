@@ -1,0 +1,3 @@
+[submodule "Assets/Scripts/BlitzkriegLib"]
+	path = Assets/Scripts/BlitzkriegLib
+	url = git@github.com:ghisihoward/BlitzkriegLib
