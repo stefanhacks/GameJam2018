@@ -10,10 +10,10 @@ Public repository for the GameJam2018 project.
 - Lucas BC
 
 ## How:
-- C#
-- Unity
-- BlitzkriegLib
-- Cthulhu sacrifices
+- [Unity](https://unity3d.com/pt)
+- [Trello](https://trello.com/b/r9zccf2B/gamejam-2018)
+- [BlitzkriegLib](https://github.com/ghisihoward/BlitzkriegLib/tree)
+- [Cthulhu sacrifices](http://knowyourmeme.com/memes/cthulhu)
 
 ## Why:
 - Cthulhu fhtagn
