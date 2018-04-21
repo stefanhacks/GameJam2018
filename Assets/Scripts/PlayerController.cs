@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour {
 
 	private float moveHorizontal;
 
-	private bool ladoD = true;
+    private bool ladoD = true;
+    public bool movementEnabled = false;
 
 	private GameSettings gS;
 
@@ -24,10 +25,10 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update(){
-		if (currentPlayer == PlayerType.PlayerOne) {
+		if (currentPlayer == PlayerType.PlayerOne && movementEnabled) {
 			moveHorizontal = Input.GetAxis ("HorizontalP1");
 
-		} else {
+		} else if (movementEnabled) {
 			moveHorizontal = Input.GetAxis ("HorizontalP2");
 		}
 		Flip (moveHorizontal);
