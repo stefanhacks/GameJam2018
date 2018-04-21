@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     private GameObject[] player;
 
-	public GameObject textoSlow;
+    public GameObject textoSlow, painelGameOver;
 
 	public float tempoSlow = 0;
 
 	public Text textoTempoSlow;
+
+    public enum GameState { Readying, Playing, GameOver }
+	public GameState currentState = GameState.Readying;
 
 	public bool comecou = false;
 
@@ -20,24 +24,31 @@ public class GameManager : MonoBehaviour {
 	private GameSettings gS;
 	void Start () {
         player = GameObject.FindGameObjectsWithTag("Player");
-		paredeMeio = GameObject.Find ("Canvas/ParedeMeio");
-		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
+	paredeMeio = GameObject.Find ("Canvas/ParedeMeio");
+	gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
     }
 	
 
 	void Update () {
-      //  Morrer(player[0]);
-       // Morrer(player[1]);
-
+        if (currentState == GameState.Readying)
+        {
+            Slow();
+        } else if (currentState == GameState.Playing)
+        {
+            checkDeath(player[0]);
+            checkDeath(player[1]);
+        } else if (currentState == GameState.GameOver)
+        {
 		paredeMeio.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
 
 		if (!comecou) {
 			Slow ();
 		}
+        }
     }
 
 	void Slow() {
-		
+		tempoSlow -= Time.deltaTime * 10;
 
 		if (tempoSlow > 1) {
 			Time.timeScale = 0.1f;
@@ -54,16 +65,17 @@ public class GameManager : MonoBehaviour {
 		{
 			Time.timeScale = 1;
 			textoSlow.SetActive(false);
-			comecou = true;
-		}
-		tempoSlow -= Time.deltaTime *10;
-
+            		currentState = GameState.Playing;
+            		player[0].GetComponent<PlayerController>().movementEnabled = true;
+   	        	player[1].GetComponent<PlayerController>().movementEnabled = true;
+       		}
 	}
 
-    void Morrer (GameObject play)
+    void checkDeath (GameObject play)
     {
 		if (Blitzkrieg.GetGameObjectPosition(play).y <= -0.025 || Blitzkrieg.GetGameObjectPosition(play).y > 1.025) {
-            Destroy(play);
+            painelGameOver.SetActive(true);
+            currentState = GameState.GameOver;
         }
     }
 
@@ -72,4 +84,15 @@ public class GameManager : MonoBehaviour {
 
 		}
 	}
+
+    public void buttonPressed(KeyCode keyPressed)
+    {
+        if (keyPressed == KeyCode.Space && currentState == GameState.GameOver)
+        {
+            SceneManager.LoadScene(1);
+        } else if (keyPressed == KeyCode.Escape && currentState == GameState.GameOver)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
 }
