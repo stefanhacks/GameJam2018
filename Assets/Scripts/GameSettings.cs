@@ -16,13 +16,19 @@ public class GameSettings : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");	
 		posicaoPlayerInicial.y = player[0].transform.position.y;
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		tempoJogo += Time.deltaTime;
 		textoTempo.text = (tempoJogo.ToString ("f0"));
-		alturaPlayers = posicaoPlayerInicial.y + player[0].transform.position.y *-1;
+		for(int i = 0; i < player.Length; i++)
+		{
+			alturaPlayers = posicaoPlayerInicial.y + player[i].transform.position.y *-1;
+		}
+
 		textoMetros.text = (alturaPlayers.ToString ("0" + " m"));
 
 	}
