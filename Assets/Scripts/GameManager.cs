@@ -22,10 +22,11 @@ public class GameManager : MonoBehaviour {
 	public GameObject paredeMeio;
 
 	private GameSettings gS;
+
 	void Start () {
         player = GameObject.FindGameObjectsWithTag("Player");
-	paredeMeio = GameObject.Find ("Canvas/ParedeMeio");
-	gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
+		paredeMeio = GameObject.Find ("Canvas/ParedeMeio");
+		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
     }
 	
 
@@ -37,13 +38,9 @@ public class GameManager : MonoBehaviour {
         {
             checkDeath(player[0]);
             checkDeath(player[1]);
-        } else if (currentState == GameState.GameOver)
-        {
-		paredeMeio.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
-
-		if (!comecou) {
-			Slow ();
-		}
+			paredeMeio.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
+        } else if (currentState == GameState.GameOver){
+			
         }
     }
 
@@ -90,8 +87,8 @@ public class GameManager : MonoBehaviour {
         if (keyPressed == KeyCode.Space && currentState == GameState.GameOver)
         {
             SceneManager.LoadScene(1);
-        } else if (keyPressed == KeyCode.Escape && currentState == GameState.GameOver)
-        {
+        }
+		if (keyPressed == KeyCode.Escape && currentState == GameState.GameOver){
             SceneManager.LoadScene(0);
         }
     }
