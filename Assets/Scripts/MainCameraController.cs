@@ -6,10 +6,11 @@ public class MainCameraController : MonoBehaviour {
 
 	public GameObject[] player;
 
-	public float transicao, transicao2;
+	private GameSettings gS;
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");	
+		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
 	}
 	
 	// Update is called once per frame
@@ -17,14 +18,12 @@ public class MainCameraController : MonoBehaviour {
 		
 		Vector2 distancia = new Vector2 (0, player[0].transform.position.y - player[1].transform.position.y);
 
-		Debug.Log ("distancia: " + distancia);
-		transicao = -2 * Time.deltaTime;
-		transicao2 = -4 * Time.deltaTime;
+		gS.velocidadeCamera = -1 * Time.deltaTime;
 
-		if (distancia.y > -2 && distancia.y < 2) {
-			transform.Translate (0, transicao, 0);
+		if (distancia.y > -3 && distancia.y < 3) {
+			transform.Translate (0, gS.velocidadeCamera * 2f, 0);
 		} else {
-			transform.Translate (0, transicao2, 0);
+			transform.Translate (0, gS.velocidadeCamera, 0);
 		}
 
 

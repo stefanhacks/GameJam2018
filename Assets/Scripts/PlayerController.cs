@@ -4,29 +4,61 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	public int velocidade;
 	Rigidbody2D rb;
 
 	public enum PlayerType { PlayerOne, PlayerTwo };
 	public PlayerType currentPlayer = PlayerType.PlayerOne;
 
-	private float moveHorizontal; 
+	private float moveHorizontal;
+
+	private bool ladoD = true;
+
+	private GameSettings gS;
+
+	private Animator animator;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
-
+		animator = GetComponent<Animator> ();
+		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
 	}
 
 	void Update(){
 		if (currentPlayer == PlayerType.PlayerOne) {
 			moveHorizontal = Input.GetAxis ("HorizontalP1");
+
 		} else {
 			moveHorizontal = Input.GetAxis ("HorizontalP2");
 		}
+		Flip (moveHorizontal);
+
+		if (rb.velocity.x < 0 || rb.velocity.x > 0) {
+			animator.SetBool ("andando", true);
+		} else {
+			animator.SetBool ("andando", false);
+		}
+
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		rb.velocity = new Vector2(moveHorizontal * velocidade, 0);
+		rb.velocity = new Vector2(moveHorizontal * gS.velocidadePlayers, 0);
+
+
+	}
+
+	private void Flip(float horizontal)
+	{
+		if (horizontal > 0 && !ladoD || horizontal < 0 && ladoD)
+		{
+			TrocarDirecao();
+		}
+	}
+
+	public void TrocarDirecao()
+	{
+		ladoD = !ladoD;
+		transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y * 1, transform.localScale.z * 1);
+
 	}
 }
