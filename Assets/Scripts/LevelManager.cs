@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour {
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
 		InvokeRepeating ("CriarPlataforma", gS.tempoSpawnPlataforma, gS.tempoSpawnPlataforma);
 		posicaox = Random.Range(-2, -6);
-		distancia.y = canvas.transform.position.y;
+		distancia.y = canvas.transform.position.y - gS.distanciaSpawnPlataforma;
 	}
 
 	// Update is called once per frame
@@ -27,8 +27,8 @@ public class LevelManager : MonoBehaviour {
 	void CriarPlataforma(){
 		
 		posicaox = Random.Range(-2, -6);
-
-		GameObject plataforma1 = Instantiate (plataforma, new Vector3 (posicaox, distancia.y -10, 0), Quaternion.identity) as GameObject;
+		gS.distanciaSpawnPlataforma = Random.Range (gS.randomTempoSpawnPlatMin, gS.randomTempoSpawnPlatMax);
+		GameObject plataforma1 = Instantiate (plataforma, new Vector3 (posicaox, distancia.y - gS.distanciaSpawnPlataforma, 0), Quaternion.identity) as GameObject;
 
 		distancia = plataforma1.transform.position;
 

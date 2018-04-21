@@ -14,8 +14,14 @@ public class GameManager : MonoBehaviour {
 	public Text textoTempoSlow;
 
 	public bool comecou = false;
+
+	public GameObject paredeMeio;
+
+	private GameSettings gS;
 	void Start () {
         player = GameObject.FindGameObjectsWithTag("Player");
+		paredeMeio = GameObject.Find ("Canvas/ParedeMeio");
+		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
     }
 	
 
@@ -23,18 +29,21 @@ public class GameManager : MonoBehaviour {
       //  Morrer(player[0]);
        // Morrer(player[1]);
 
+		paredeMeio.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
+
 		if (!comecou) {
 			Slow ();
 		}
     }
 
 	void Slow() {
-		tempoSlow -= Time.deltaTime *10;
+		
 
 		if (tempoSlow > 1) {
 			Time.timeScale = 0.1f;
 			textoSlow.SetActive(true);
-			textoTempoSlow.text = "" + tempoSlow.ToString("f0"); ;
+			textoTempoSlow.text = "" + tempoSlow.ToString("f0");
+
 		}
 
 		if (tempoSlow <= 0 && tempoSlow >= -1) {
@@ -47,6 +56,8 @@ public class GameManager : MonoBehaviour {
 			textoSlow.SetActive(false);
 			comecou = true;
 		}
+		tempoSlow -= Time.deltaTime *10;
+
 	}
 
     void Morrer (GameObject play)
@@ -56,4 +67,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+	void Vencer(){
+		if (gS.alturaPlayers >= 200) {
+
+		}
+	}
 }
