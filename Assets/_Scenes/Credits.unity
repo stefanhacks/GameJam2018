@@ -262,7 +262,7 @@ MonoBehaviour:
 
     Musics
 
-    Escape To Eternity by Waveshaper (Sir Ridley Remix)
+    Dark Light by Vodovoz
 
     Journey by Declan DP'
 --- !u!222 &177830854
@@ -887,7 +887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 919, y: -63.99949}
+  m_AnchoredPosition: {x: 918.99994, y: -63.99949}
   m_SizeDelta: {x: 949.62, y: 663.9}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1731703800
