@@ -10,17 +10,14 @@ public class MainCameraController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");	
-		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
+		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		if (gS.moveCamera) {
 			MoveCamera ();
 		}
-
-
 
 		/*
 		if (player [1].transform.position.y <= transform.position.y) {
@@ -33,7 +30,7 @@ public class MainCameraController : MonoBehaviour {
 		*/
 	}
 
-	void MoveCamera(){
+	void MoveCamera () {
 		Vector2 distancia = new Vector2 (0, player[0].transform.position.y - player[1].transform.position.y);
 
 		gS.velocidadeCamera = -1 * Time.deltaTime;

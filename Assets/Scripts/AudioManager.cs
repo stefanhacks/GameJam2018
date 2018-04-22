@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	private static AudioManager instance = null;
+
+	public static AudioManager Instance {
+		get { return instance; }
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void Awake () {
+		if (instance != null && instance != this) {
+			Destroy (this.gameObject);
+			return;
+		} else {
+			instance = this;
+		}
+
+		DontDestroyOnLoad (this.gameObject);
 	}
 }

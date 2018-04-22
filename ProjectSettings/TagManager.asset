@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plataforma
   - GameOverPainel
+  - AudioManager
   layers:
   - Default
   - TransparentFX
