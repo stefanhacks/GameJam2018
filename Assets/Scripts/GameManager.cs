@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-    private GameObject[] player;
+    private GameObject[] player, plataformas;
 
-    public GameObject textoSlow, painelGameOver;
+	public GameObject textoSlow, painelGameOver, plataformVitoriaP1, plataformVitoriaP2, textoGameOver, textoWin ;
 
-	public float tempoSlow = 0;
+	public float tempoSlow = 0, tempoMorte = 0;
 
 	public Text textoTempoSlow;
 
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
         player = GameObject.FindGameObjectsWithTag("Player");
 		paredeMeio = GameObject.Find ("Canvas/ParedeMeio");
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
+
     }
 	
 
@@ -36,9 +37,17 @@ public class GameManager : MonoBehaviour {
             Slow();
         } else if (currentState == GameState.Playing)
         {
+			gS.tempoJogo += Time.deltaTime;
+			plataformas = GameObject.FindGameObjectsWithTag("Plataforma");
             checkDeath(player[0]);
             checkDeath(player[1]);
-			paredeMeio.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
+			if (gS.moveCamera) {
+				paredeMeio.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
+			}
+
+			if (gS.alturaPlayers >= 50) {
+				Vencer ();
+			}
         } else if (currentState == GameState.GameOver){
 			
         }
@@ -70,16 +79,37 @@ public class GameManager : MonoBehaviour {
 
     void checkDeath (GameObject play)
     {
-		if (Blitzkrieg.GetGameObjectPosition(play).y <= -0.025 || Blitzkrieg.GetGameObjectPosition(play).y > 1.025) {
-            painelGameOver.SetActive(true);
-            currentState = GameState.GameOver;
-        }
+		
+		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.15 || Blitzkrieg.GetGameObjectPosition (play).y > 1.15) {
+
+			tempoMorte += Time.deltaTime;
+			gS.moveCamera = false;
+			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+			player[0].GetComponent<PlayerController>().movementEnabled = false;
+			player[1].GetComponent<PlayerController>().movementEnabled = false;
+			foreach (GameObject plataformas in plataformas) {
+				if (plataformas.GetComponent<SpriteRenderer> ().enabled == false) {
+					plataformas.GetComponent<SpriteRenderer> ().enabled = true;
+					plataformas.GetComponent<ColorChange> ().enabled = true;
+				}
+			}
+			if (tempoMorte >= 3) {
+				textoWin.SetActive (false);
+				textoGameOver.SetActive (true);
+				painelGameOver.SetActive (true);
+				currentState = GameState.GameOver;
+			}
+		}
     }
 
 	void Vencer(){
-		if (gS.alturaPlayers >= 200) {
-
-		}
+		textoGameOver.SetActive (false);
+		textoWin.SetActive (true);
+		plataformVitoriaP1.gameObject.SetActive (true);
+		plataformVitoriaP2.gameObject.SetActive (true);
+		gS.moveCamera = false;
+		currentState = GameState.GameOver;
 	}
 
     public void buttonPressed(KeyCode keyPressed)

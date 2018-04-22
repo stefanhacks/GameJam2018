@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		Flip (moveHorizontal);
 
-		if (rb.velocity.x < 0 || rb.velocity.x > 0) {
+		if (rb.velocity.x < -0.1f || rb.velocity.x > 0.1f) {
 			animator.SetBool ("andando", true);
 		} else {
 			animator.SetBool ("andando", false);

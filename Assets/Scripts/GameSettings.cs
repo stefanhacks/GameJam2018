@@ -14,6 +14,7 @@ public class GameSettings : MonoBehaviour {
 
 	public Vector3 posicaoPlayerInicial;
 
+	public bool moveCamera = true;
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");	
@@ -23,7 +24,6 @@ public class GameSettings : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		tempoJogo += Time.deltaTime;
 		textoTempo.text = (tempoJogo.ToString ("f0"));
 
 		for(int i = 0; i < player.Length; i++)
