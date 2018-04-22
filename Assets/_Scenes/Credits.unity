@@ -242,7 +242,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: ff3692f4b63f2f8408a3fb7379594016, type: 3}
-    m_FontSize: 40
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -264,7 +264,12 @@ MonoBehaviour:
 
     Escape To Eternity by Waveshaper (Sir Ridley Remix)
 
-    Journey by Declan DP'
+    Journey by Declan DP
+
+
+    SFX
+
+    Click by Eternitys'
 --- !u!222 &177830854
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -425,8 +430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0.0000076293945}
-  m_SizeDelta: {x: -1, y: -1}
+  m_AnchoredPosition: {x: 0.0000076293945, y: 0.0000038146973}
+  m_SizeDelta: {x: -0.99998474, y: -1.0000076}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1378402965
 MonoBehaviour:
@@ -1026,7 +1031,7 @@ RectTransform:
   m_GameObject: {fileID: 1833566205}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -9609.485}
-  m_LocalScale: {x: 0.9998184, y: 0.9998184, z: 0.9998184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1114660988}
   m_Father: {fileID: 1612199201}

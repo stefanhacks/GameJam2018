@@ -4,21 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour {
 
-	public AudioSource SomGame;
-	public AudioSource SomCredits;
-	public AudioSource SomExit;
+	public AudioSource SomClick;
 
 	public void NewGameBtn (string NewGameLevel) {
 		SceneManager.LoadScene (NewGameLevel);
 
-		SomGame.Play ();
+		SomClick.Play ();
 		SceneManager.LoadScene (NewGameLevel);
 
-		SomCredits.Play ();
-		SceneManager.LoadScene (NewGameLevel);
-
-		SomExit.Play ();
-		SceneManager.LoadScene (NewGameLevel);
 	}
 
 	public void ExitGameBtn () {
