@@ -12,6 +12,7 @@ TagManager:
   - ChaveSlot
   - Porta
   - Final
+  - High5
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - SpriteAnimation
   - 
   - 
   - 
