@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
 	private GameObject[] player, plataformas;
-	private GameObject chaveSlot, final;
-	private AudioSource audioManager;
+	private GameObject chaveSlot, final, highFive;
+    private AudioSource audioManager;
 	public AudioClip music;
 	public GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore;
 	public float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar;
@@ -24,13 +24,12 @@ public class GameManager : MonoBehaviour {
 
 	public GameState currentState = GameState.Readying;
 	public bool comecou = false;
-	public GameObject[] paredes;
 	private GameSettings gS;
 
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");
-		paredes = GameObject.FindGameObjectsWithTag ("Paredes");
 		chaveSlot = GameObject.FindGameObjectWithTag ("ChaveSlot");
+        highFive = GameObject.FindGameObjectWithTag ("High5");
 		final = GameObject.FindGameObjectWithTag ("Final");
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
 		audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioSource> ();
@@ -61,9 +60,6 @@ public class GameManager : MonoBehaviour {
 			}
 			if (gS.moveCamera) {
 				gS.tempoJogo += Time.deltaTime;
-				for (int i = 0; i < paredes.Length; i++) {
-					paredes[i].transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
-				}
 			}
 
 			if (gS.quantidadeChave >=3) {
@@ -120,8 +116,8 @@ public class GameManager : MonoBehaviour {
 
 
 			gS.moveCamera = false;
-			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX;
-			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX;
+			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 			player[0].GetComponent<PlayerController> ().movementEnabled = false;
 			player[1].GetComponent<PlayerController> ().movementEnabled = false;
 			foreach (GameObject plataformas in plataformas) {
@@ -134,8 +130,9 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void Vencer () {
-		foreach (GameObject plataformas in plataformas) {
+	void Vencer ()
+    {
+        foreach (GameObject plataformas in plataformas) {
 			Vector2 distanciaP1 = new Vector2 (0, plataformas.transform.position.y - final.transform.position.y);
 			Vector2 distanciaP2 = new Vector2 (0, plataformas.transform.position.y - final.transform.position.y);
 			if (distanciaP1.y <= 2 || distanciaP2.y <=2) {
@@ -153,14 +150,20 @@ public class GameManager : MonoBehaviour {
 			gS.moveCamera = false;
 		}
 
-		if (gS.fim) {
-			textoGameOver.SetActive (false);
-			textoWin.SetActive (true);
-			painelGameOver.SetActive (true);
-			currentState = GameState.GameOver;
-		}
+		if (gS.fim)
+        {
+            highFive.GetComponent<Animator>().Play("Hi5");
+        }
 
 	}
+
+    public void proceedGameWin ()
+    {
+        textoGameOver.SetActive(false);
+        textoWin.SetActive(true);
+        painelGameOver.SetActive(true);
+        currentState = GameState.GameOver;
+    }
 
 	public void buttonPressed (KeyCode keyPressed) {
 		if (keyPressed == KeyCode.Space && currentState == GameState.GameOver) {
