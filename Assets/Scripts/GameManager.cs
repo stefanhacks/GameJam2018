@@ -24,12 +24,10 @@ public class GameManager : MonoBehaviour {
 
 	public GameState currentState = GameState.Readying;
 	public bool comecou = false;
-	public GameObject[] paredes;
 	private GameSettings gS;
 
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");
-		paredes = GameObject.FindGameObjectsWithTag ("Paredes");
 		chaveSlot = GameObject.FindGameObjectWithTag ("ChaveSlot");
 		final = GameObject.FindGameObjectWithTag ("Final");
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
@@ -61,9 +59,6 @@ public class GameManager : MonoBehaviour {
 			}
 			if (gS.moveCamera) {
 				gS.tempoJogo += Time.deltaTime;
-				for (int i = 0; i < paredes.Length; i++) {
-					paredes[i].transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
-				}
 			}
 
 			if (gS.quantidadeChave >=3) {
@@ -120,8 +115,8 @@ public class GameManager : MonoBehaviour {
 
 
 			gS.moveCamera = false;
-			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX;
-			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX;
+			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 			player[0].GetComponent<PlayerController> ().movementEnabled = false;
 			player[1].GetComponent<PlayerController> ().movementEnabled = false;
 			foreach (GameObject plataformas in plataformas) {

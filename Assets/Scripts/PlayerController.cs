@@ -48,8 +48,6 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		rb.velocity = new Vector2 (moveHorizontal * gS.velocidadePlayers, 0);
-
-
 	}
 
 	private void Flip (float horizontal) {
@@ -61,7 +59,6 @@ public class PlayerController : MonoBehaviour {
 	public void TrocarDirecao () {
 		ladoD = !ladoD;
 		transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y * 1, transform.localScale.z * 1);
-
 	}
 
 	void OnTriggerEnter2D(Collider2D col){

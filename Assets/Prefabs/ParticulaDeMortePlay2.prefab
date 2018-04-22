@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4467706988187892}
   - component: {fileID: 198443257340275310}
   - component: {fileID: 199455787233660976}
-  - component: {fileID: 114042202548466406}
   m_Layer: 0
   m_Name: ParticulaDeMortePlay2
   m_TagString: Untagged
@@ -42,17 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114042202548466406
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1980773245103338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &198443257340275310
 ParticleSystem:
   m_ObjectHideFlags: 1
