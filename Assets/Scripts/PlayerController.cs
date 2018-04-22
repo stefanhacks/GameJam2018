@@ -61,4 +61,11 @@ public class PlayerController : MonoBehaviour {
 		transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y * 1, transform.localScale.z * 1);
 
 	}
+
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.gameObject.tag == "Chave") {
+			Destroy (col.gameObject);
+			gS.quantidadeChave++;
+		}
+	}
 }

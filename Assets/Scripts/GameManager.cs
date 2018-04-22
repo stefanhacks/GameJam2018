@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-	private GameObject[] player, plataformas;
+	private GameObject[] player, plataformas, chaveSlot;
 	private AudioSource audioManager;
 	public AudioClip music;
 	public GameObject textoSlow, painelGameOver, plataformVitoriaP1, plataformVitoriaP2, textoGameOver, textoWin;
 	public float tempoSlow = 0, tempoMorte = 0;
 	public Text textoTempoSlow;
+
+	public Sprite chaveImg;
 
 	public enum GameState {
 		Readying,
@@ -21,12 +23,13 @@ public class GameManager : MonoBehaviour {
 
 	public GameState currentState = GameState.Readying;
 	public bool comecou = false;
-	public GameObject paredeMeio;
+	public GameObject[] paredes;
 	private GameSettings gS;
 
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");
-		paredeMeio = GameObject.Find ("Canvas/ParedeMeio");
+		paredes = GameObject.FindGameObjectsWithTag ("Paredes");
+		chaveSlot = GameObject.FindGameObjectsWithTag ("ChaveSlot");
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
 		audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioSource> ();
 		audioManager.clip = music;
@@ -36,16 +39,28 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		if (currentState == GameState.Readying) {
 			Slow ();
-		} else if (currentState == GameState.Playing) {
-			gS.tempoJogo += Time.deltaTime;
-			plataformas = GameObject.FindGameObjectsWithTag ("Plataforma");
-			checkDeath (player[0]);
-			checkDeath (player[1]);
-			if (gS.moveCamera) {
-				paredeMeio.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
+        } else if (currentState == GameState.Playing)
+        {
+			if (gS.quantidadeChave == 1) {
+				chaveSlot [0].GetComponent<SpriteRenderer> ().sprite = chaveImg;
+			} else if (gS.quantidadeChave == 2) {
+				chaveSlot [1].GetComponent<SpriteRenderer> ().sprite = chaveImg;
+			} else if (gS.quantidadeChave == 3) {
+				chaveSlot [2].GetComponent<SpriteRenderer> ().sprite = chaveImg;
 			}
 
-			if (gS.alturaPlayers >= 50) {
+			plataformas = GameObject.FindGameObjectsWithTag("Plataforma");
+            checkDeath(player[0]);
+            checkDeath(player[1]);
+
+			if (gS.moveCamera) {
+				gS.tempoJogo += Time.deltaTime;
+				for (int i = 0; i < paredes.Length; i++) {
+					paredes[i].transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
+				}
+			}
+
+			if (gS.quantidadeChave >=3) {
 				Vencer ();
 			}
 		} else if (currentState == GameState.GameOver) {
@@ -80,7 +95,7 @@ public class GameManager : MonoBehaviour {
 
 	void checkDeath (GameObject play) {
 		
-		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.15 || Blitzkrieg.GetGameObjectPosition (play).y > 1.15) {
+		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.15 || Blitzkrieg.GetGameObjectPosition (play).y > 1.10) {
 
 			tempoMorte += Time.deltaTime;
 			gS.moveCamera = false;
@@ -104,6 +119,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Vencer () {
+		foreach (GameObject plataformas in plataformas) {
+			Vector2 distanciaP1 = new Vector2 (0, plataformas.transform.position.y - plataformVitoriaP1.transform.position.y);
+			Vector2 distanciaP2 = new Vector2 (0, plataformas.transform.position.y - plataformVitoriaP2.transform.position.y);
+			if (distanciaP1.y <= 2 || distanciaP2.y <=2) {
+				Destroy (plataformas);
+			}
+		}
 		textoGameOver.SetActive (false);
 		textoWin.SetActive (true);
 		plataformVitoriaP1.gameObject.SetActive (true);
