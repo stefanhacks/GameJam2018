@@ -54,13 +54,14 @@ MonoBehaviour:
   music: {fileID: 8300000, guid: 46746bcc0185efb4d87149fcdf6e488d, type: 3}
   textoSlow: {fileID: 0}
   painelGameOver: {fileID: 0}
-  plataformVitoriaP1: {fileID: 0}
-  plataformVitoriaP2: {fileID: 0}
   textoGameOver: {fileID: 0}
   textoWin: {fileID: 0}
+  textoScore: {fileID: 0}
   tempoSlow: 3.7
   tempoMorte: 0
+  tempoFinalizar: 0
   textoTempoSlow: {fileID: 0}
+  chaveImg: {fileID: 21300000, guid: 703b1ea29df84b1479464553324d38a5, type: 3}
   currentState: 0
   comecou: 0
-  paredeMeio: {fileID: 0}
+  paredes: []

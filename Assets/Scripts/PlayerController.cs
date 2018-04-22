@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator> ();
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
+		gS.posicaoPlayerInicial.y = transform.position.y;
 	}
 
 	void Update () {

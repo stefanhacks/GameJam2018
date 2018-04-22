@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	private AudioSource audioManager;
 	public AudioClip music;
 	public GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore;
-	public float tempoSlow = 0, tempoMorte = 0, tempoFinalizar;
+	public float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar;
 	public Text textoTempoSlow;
 
 	public Sprite chaveImg;
@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour {
 	public GameObject[] paredes;
 	private GameSettings gS;
 
+	void Awake(){
+		Time.timeScale = 0.1f;
+	}
+
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");
 		paredes = GameObject.FindGameObjectsWithTag ("Paredes");
@@ -35,6 +39,8 @@ public class GameManager : MonoBehaviour {
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
 		audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioSource> ();
 		audioManager.clip = music;
+		gS.posicaoPlayerInicial.y = transform.position.y;
+
 	}
 
 
@@ -43,6 +49,7 @@ public class GameManager : MonoBehaviour {
 			Slow ();
         } else if (currentState == GameState.Playing)
         {
+			checarAltura ();
 			if (gS.quantidadeChave == 1) {
 				chaveSlot.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = chaveImg;
 			} else if (gS.quantidadeChave == 2) {
@@ -73,8 +80,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Slow () {
-		tempoSlow -= Time.deltaTime * 10;
-
 		if (tempoSlow > 1) {
 			Time.timeScale = 0.1f;
 			textoSlow.SetActive (true);
@@ -93,11 +98,19 @@ public class GameManager : MonoBehaviour {
 			player[1].GetComponent<PlayerController> ().movementEnabled = true;
 			audioManager.Play ();
 		}
+	
+		tempoSlow -= Time.deltaTime * 10;
+		Debug.Log ("tempoSlow " + tempoSlow);
+		Debug.Log ("Time.timeScale " + Time.timeScale);
 	}
 
 	void checkDeath (GameObject play) {
 		
-		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.15 || Blitzkrieg.GetGameObjectPosition (play).y > 1.10) {
+		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.10 || Blitzkrieg.GetGameObjectPosition (play).y > 1.10) {
+
+			if (gS.moveCamera) {
+				play.transform.GetChild (0).gameObject.SetActive (true);
+			}
 
 			tempoMorte += Time.deltaTime;
 			gS.moveCamera = false;
@@ -128,7 +141,7 @@ public class GameManager : MonoBehaviour {
 				Destroy (plataformas);
 			}
 		}
-		gS.velocidadeParedeMeio = 0.075f;
+		gS.velocidadeParedeMeio = 0.068f;
 		tempoFinalizar += Time.deltaTime;
 
 		if (tempoFinalizar < 4) {
@@ -156,4 +169,15 @@ public class GameManager : MonoBehaviour {
 			SceneManager.LoadScene (0);
 		}
 	}
+
+	public void checarAltura(){
+		//	gS.alturaPlayers = gS.posicaoPlayerInicial.y + player[1].transform.position.y * -1;
+
+		if (player [0].transform.position.y > player [1].transform.position.y) {
+			gS.alturaPlayers = (player [1].transform.position.y - gS.posicaoPlayerInicial.y) * -1;
+		} else {
+			gS.alturaPlayers = (player [0].transform.position.y - gS.posicaoPlayerInicial.y) * -1;
+		}
+	}
+
 }

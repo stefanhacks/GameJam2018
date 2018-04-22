@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plataforma: {fileID: 1780493877671838, guid: 9affbe204947ee345b894c9b6f989766, type: 2}
+  chave: {fileID: 1020003247231838, guid: 9a90c94eeb3054b47a1836f897907ac4, type: 2}
   canvas: {fileID: 0}
   posicaox: 0
-  plataforma2Sprite: {fileID: 21300000, guid: cf9fa24f181582a47a6b32a118d4024d, type: 3}
+  plataforma2Sprite: {fileID: 21300000, guid: 8abb39b290d7c144699f026de3d7e26e, type: 3}

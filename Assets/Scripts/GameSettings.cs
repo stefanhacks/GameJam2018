@@ -9,27 +9,19 @@ public class GameSettings : MonoBehaviour {
 	alturaPlayers, velocidadeParedeMeio, distanciaSpawnPlataforma, randomTempoSpawnPlatMin, randomTempoSpawnPlatMax, tempoSpawnChave, pontuacaoFinal;
 
 	public Text textoTempo, textoMetros;
-	public GameObject[] player;
 	public Vector3 posicaoPlayerInicial;
 	public bool moveCamera = true;
 	public bool venceu = false;
 	public bool fim = false;
-
 	public int quantidadeChave;
+
 	void Start () {
-		player = GameObject.FindGameObjectsWithTag ("Player");	
-		posicaoPlayerInicial.y = player[0].transform.position.y;
 	
 	}
 
 	void Update () {
 		textoTempo.text = (tempoJogo.ToString ("0" + " s"));
-
-		for (int i = 0; i < player.Length; i++) {
-			alturaPlayers = posicaoPlayerInicial.y + player[i].transform.position.y * -1;
-		}
 		textoMetros.text = (alturaPlayers.ToString ("0" + " m"));
-
 	}
 }
 
