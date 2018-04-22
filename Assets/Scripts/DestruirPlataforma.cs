@@ -14,10 +14,8 @@ public class DestruirPlataforma : MonoBehaviour {
 		
 	}
 
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.gameObject.tag == "Plataforma")
-		{
+	void OnTriggerEnter2D (Collider2D other) {
+		if (other.gameObject.tag == "Plataforma") {
 			Destroy (other.gameObject);
 		}
 	}

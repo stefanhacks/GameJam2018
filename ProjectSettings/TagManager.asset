@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Plataforma
   - GameOverPainel
+  - AudioManager
+  - Paredes
+  - Chave
+  - ChaveSlot
   layers:
   - Default
   - TransparentFX

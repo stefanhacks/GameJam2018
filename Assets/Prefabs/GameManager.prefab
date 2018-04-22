@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4372807031632342}
-  - component: {fileID: 114295918840237390}
+  - component: {fileID: 114567171144058826}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114295918840237390
+--- !u!114 &114567171144058826
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,6 +48,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1845062715186208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9748763c92d8d434ab7d95876e747640, type: 3}
+  m_Script: {fileID: 11500000, guid: facc79228662cd649a73d3483036b2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: {fileID: 8300000, guid: 46746bcc0185efb4d87149fcdf6e488d, type: 3}
+  textoSlow: {fileID: 0}
+  painelGameOver: {fileID: 0}
+  plataformVitoriaP1: {fileID: 0}
+  plataformVitoriaP2: {fileID: 0}
+  textoGameOver: {fileID: 0}
+  textoWin: {fileID: 0}
+  tempoSlow: 3.7
+  tempoMorte: 0
+  textoTempoSlow: {fileID: 0}
+  currentState: 0
+  comecou: 0
+  paredeMeio: {fileID: 0}
