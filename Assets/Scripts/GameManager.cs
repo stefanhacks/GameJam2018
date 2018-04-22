@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour {
 			currentState = GameState.GameOver;
 		}
 
-		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.10 || Blitzkrieg.GetGameObjectPosition (play).y > 1.10) {
+		if (Blitzkrieg.GetGameObjectPosition (play).y < 0 || Blitzkrieg.GetGameObjectPosition (play).y > 1) {
 			morreu = true;
 			if (gS.moveCamera) {
 				play.transform.GetChild (0).gameObject.SetActive (true);
