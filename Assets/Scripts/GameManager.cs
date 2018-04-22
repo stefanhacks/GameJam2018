@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore;
 	public float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar;
 	public Text textoTempoSlow;
-
+	public bool morreu = false;
 	public Sprite chaveImg;
 
 	public enum GameState {
@@ -26,10 +26,6 @@ public class GameManager : MonoBehaviour {
 	public bool comecou = false;
 	public GameObject[] paredes;
 	private GameSettings gS;
-
-	void Awake(){
-		Time.timeScale = 0.1f;
-	}
 
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");
@@ -59,9 +55,10 @@ public class GameManager : MonoBehaviour {
 			}
 
 			plataformas = GameObject.FindGameObjectsWithTag("Plataforma");
-            checkDeath(player[0]);
-            checkDeath(player[1]);
-
+			if (!gS.venceu) {
+				checkDeath (player [0]);
+				checkDeath (player [1]);
+			}
 			if (gS.moveCamera) {
 				gS.tempoJogo += Time.deltaTime;
 				for (int i = 0; i < paredes.Length; i++) {
@@ -100,19 +97,28 @@ public class GameManager : MonoBehaviour {
 		}
 	
 		tempoSlow -= Time.deltaTime * 10;
-		Debug.Log ("tempoSlow " + tempoSlow);
-		Debug.Log ("Time.timeScale " + Time.timeScale);
+
 	}
 
 	void checkDeath (GameObject play) {
-		
-		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.10 || Blitzkrieg.GetGameObjectPosition (play).y > 1.10) {
+		if (morreu) {
+			tempoMorte += Time.deltaTime;
+		}
 
+		if (tempoMorte >= 3) {
+			textoWin.SetActive (false);
+			textoGameOver.SetActive (true);
+			painelGameOver.SetActive (true);
+			currentState = GameState.GameOver;
+		}
+
+		if (Blitzkrieg.GetGameObjectPosition (play).y <= -0.10 || Blitzkrieg.GetGameObjectPosition (play).y > 1.10) {
+			morreu = true;
 			if (gS.moveCamera) {
 				play.transform.GetChild (0).gameObject.SetActive (true);
 			}
 
-			tempoMorte += Time.deltaTime;
+
 			gS.moveCamera = false;
 			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX;
 			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -124,12 +130,7 @@ public class GameManager : MonoBehaviour {
 					plataformas.GetComponent<ColorChange> ().enabled = true;
 				}
 			}
-			if (tempoMorte >= 3) {
-				textoWin.SetActive (false);
-				textoGameOver.SetActive (true);
-				painelGameOver.SetActive (true);
-				currentState = GameState.GameOver;
-			}
+
 		}
 	}
 

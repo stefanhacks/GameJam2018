@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class GameSettings : MonoBehaviour {
 
-	public float velocidadeCamera, tempoSpawnPlataforma, tempoSpawnPlataformaInv, velocidadePlayers, tempoJogo, 
-	alturaPlayers, velocidadeParedeMeio, distanciaSpawnPlataforma, randomTempoSpawnPlatMin, randomTempoSpawnPlatMax, tempoSpawnChave, pontuacaoFinal;
+	public float velocidadeCamera, tempoSpawnPlataforma, tempoSpawnPlataformaInv, velocidadePlayers, tempoJogo, alturaPlayers, 
+	velocidadeParedeMeio, distanciaSpawnPlataforma, randomTempoSpawnPlatMin, randomTempoSpawnPlatMax, tempoSpawnChave, pontuacaoFinal,
+	tempoSpawnPlataformaMove;
 
 	public Text textoTempo, textoMetros;
 	public Vector3 posicaoPlayerInicial;
