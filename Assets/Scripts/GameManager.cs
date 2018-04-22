@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 
 	private GameObject[] player, plataformas;
 	private GameObject chaveSlot, final, highFive;
-    private AudioSource audioManager;
+    private AudioSource audioManager, audioSource;
 	public AudioClip music;
 	public GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore;
 	public float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar;
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour {
 	public bool comecou = false;
 	private GameSettings gS;
 
+	public AudioClip deathSound, victorySound;
+
 	void Start () {
 		player = GameObject.FindGameObjectsWithTag ("Player");
 		chaveSlot = GameObject.FindGameObjectWithTag ("ChaveSlot");
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour {
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
 		audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioSource> ();
 		audioManager.clip = music;
+		audioSource = this.GetComponent<AudioSource> ();
 		gS.posicaoPlayerInicial.y = transform.position.y;
 
 	}
@@ -112,6 +115,9 @@ public class GameManager : MonoBehaviour {
 			morreu = true;
 			if (gS.moveCamera) {
 				play.transform.GetChild (0).gameObject.SetActive (true);
+
+				audioSource.clip = deathSound;
+				audioSource.Play ();
 			}
 
 
@@ -163,13 +169,18 @@ public class GameManager : MonoBehaviour {
         textoWin.SetActive(true);
         painelGameOver.SetActive(true);
         currentState = GameState.GameOver;
+		audioSource.clip = victorySound;
+		audioSource.Play ();
     }
 
 	public void buttonPressed (KeyCode keyPressed) {
 		if (keyPressed == KeyCode.Space && currentState == GameState.GameOver) {
+			audioManager.Stop ();
 			SceneManager.LoadScene (1);
 		}
 		if (keyPressed == KeyCode.Escape && currentState == GameState.GameOver) {
+			audioManager.Stop ();
+			Destroy (audioManager.gameObject);
 			SceneManager.LoadScene (0);
 		}
 	}

@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour {
 						key2.GetComponent<SpriteRenderer> ().enabled = false;
 					}
 				}
-				gS.tempoSpawnChave = Random.Range (8, 15);
+				gS.tempoSpawnChave = Random.Range (5, 10);
 			}			 
 		}
 	}

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 		PlayerTwo
 	}
 
+	public AudioClip keySound, deathSound;
 	public PlayerType currentPlayer = PlayerType.PlayerOne;
 	public bool movementEnabled = false;
 
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 	private Animator animator;
 
 	private GameObject[] chaves;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
@@ -68,6 +70,10 @@ public class PlayerController : MonoBehaviour {
 				Destroy(chaves);
 			}
 			gS.quantidadeChave++;
+
+			AudioSource audioSource = this.GetComponent<AudioSource> ();
+			audioSource.clip = keySound;
+			audioSource.Play ();
 		}
 
 		if (col.gameObject.tag == "Porta") {
