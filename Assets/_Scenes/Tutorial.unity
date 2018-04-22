@@ -330,7 +330,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 445735989}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -75.39997, y: 5, z: -9719.226}
+  m_LocalPosition: {x: -70, y: 5, z: -9719.226}
   m_LocalScale: {x: 107.99136, y: 107.99136, z: 107.99136}
   m_Children: []
   m_Father: {fileID: 1206716639}
@@ -581,7 +581,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nStay in the\nplataforms\n\nKeep an eye \non your\nFRIEND'S screen\n"
+  m_Text: 'Stay in the
+
+    platforms
+
+
+    Platforms exists
+
+    in BOTH screens
+
+    even when they
+
+    are INVISIBLE
+
+'
 --- !u!222 &932737246
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -692,7 +705,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1020304355}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.600071, y: 5, z: -9719.227}
+  m_LocalPosition: {x: 0, y: 5, z: -9719.227}
   m_LocalScale: {x: 107.99136, y: 107.99136, z: 107.99136}
   m_Children: []
   m_Father: {fileID: 1206716639}
@@ -765,7 +778,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1094088029}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 84.60005, y: 5, z: -9719.227}
+  m_LocalPosition: {x: 70, y: 5, z: -9719.227}
   m_LocalScale: {x: 107.99136, y: 107.99136, z: 107.99136}
   m_Children: []
   m_Father: {fileID: 1206716639}
