@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour {
 		InvokeRepeating ("CriarPlataforma", gS.tempoSpawnPlataforma, gS.tempoSpawnPlataforma);
 		posicaox = Random.Range(-2, -6);
 		distancia.y = canvas.transform.position.y - gS.distanciaSpawnPlataforma;
-		gS.tempoSpawnChave = Random.Range (-15, -25);
+		gS.tempoSpawnChave = Random.Range (-2, -5);
 	}
 
 	// Update is called once per frame
@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	void CriarPlataforma(){
-		//if (gS.alturaPlayers <= 40) {
+		if (!gS.venceu) {
 			posicaox = Random.Range (-2, -6);
 			gS.distanciaSpawnPlataforma = Random.Range (gS.randomTempoSpawnPlatMin, gS.randomTempoSpawnPlatMax);
 			GameObject plataforma1 = Instantiate (plataforma, new Vector3 (posicaox, distancia.y - gS.distanciaSpawnPlataforma, 0), Quaternion.identity) as GameObject;
@@ -58,21 +58,21 @@ public class LevelManager : MonoBehaviour {
 				}
 			}
 
-		if (gS.tempoSpawnChave >= 0) {
-			int escolha = Random.Range (0, 2);
-			if (escolha == 1) {
-				GameObject key1 = Instantiate (chave, new Vector3 (plataforma1.transform.position.x, plataforma1.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
-				GameObject key2 = Instantiate (chave, new Vector3 (plataforma2.transform.position.x, plataforma2.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
-				key1.GetComponent<BoxCollider2D> ().enabled = false;
-				key2.GetComponent<SpriteRenderer> ().enabled = false;
-			} else {
-				GameObject key1 = Instantiate (chave, new Vector3 (plataforma2.transform.position.x, plataforma2.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
-				GameObject key2 = Instantiate (chave, new Vector3 (plataforma1.transform.position.x, plataforma1.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
-				key1.GetComponent<SpriteRenderer> ().enabled = false;
-				key2.GetComponent<BoxCollider2D> ().enabled = false;
+			if (gS.tempoSpawnChave >= 0) {
+				int escolha = Random.Range (0, 2);
+				if (escolha == 1) {
+					GameObject key1 = Instantiate (chave, new Vector3 (plataforma1.transform.position.x, plataforma1.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
+					GameObject key2 = Instantiate (chave, new Vector3 (plataforma2.transform.position.x, plataforma2.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
+					key1.GetComponent<BoxCollider2D> ().enabled = false;
+					key2.GetComponent<SpriteRenderer> ().enabled = false;
+				} else {
+					GameObject key1 = Instantiate (chave, new Vector3 (plataforma2.transform.position.x, plataforma2.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
+					GameObject key2 = Instantiate (chave, new Vector3 (plataforma1.transform.position.x, plataforma1.transform.position.y + 0.7f, 0), Quaternion.identity) as GameObject;
+					key1.GetComponent<SpriteRenderer> ().enabled = false;
+					key2.GetComponent<BoxCollider2D> ().enabled = false;
+				}
+				gS.tempoSpawnChave = Random.Range (-2, -5);
 			}
-			gS.tempoSpawnChave = Random.Range(-15,-25);
 		}
-	//}
 	}
 }

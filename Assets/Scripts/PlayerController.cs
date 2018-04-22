@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 	private GameSettings gS;
 	private Animator animator;
 
+	private GameObject[] chaves;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
@@ -64,8 +65,15 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "Chave") {
-			Destroy (col.gameObject);
+			chaves = GameObject.FindGameObjectsWithTag ("Chave");
+			foreach (GameObject chaves in chaves) {
+				Destroy(chaves);
+			}
 			gS.quantidadeChave++;
+		}
+
+		if (col.gameObject.tag == "Porta") {
+			gS.fim = true;
 		}
 	}
 }

@@ -10,6 +10,8 @@ TagManager:
   - Paredes
   - Chave
   - ChaveSlot
+  - Porta
+  - Final
   layers:
   - Default
   - TransparentFX

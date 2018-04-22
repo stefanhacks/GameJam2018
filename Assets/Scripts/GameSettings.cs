@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class GameSettings : MonoBehaviour {
 
 	public float velocidadeCamera, tempoSpawnPlataforma, tempoSpawnPlataformaInv, velocidadePlayers, tempoJogo, 
-	alturaPlayers, velocidadeParedeMeio, distanciaSpawnPlataforma, randomTempoSpawnPlatMin, randomTempoSpawnPlatMax, tempoSpawnChave;
+	alturaPlayers, velocidadeParedeMeio, distanciaSpawnPlataforma, randomTempoSpawnPlatMin, randomTempoSpawnPlatMax, tempoSpawnChave, pontuacaoFinal;
 
 	public Text textoTempo, textoMetros;
 	public GameObject[] player;
 	public Vector3 posicaoPlayerInicial;
 	public bool moveCamera = true;
+	public bool venceu = false;
+	public bool fim = false;
 
 	public int quantidadeChave;
 	void Start () {
