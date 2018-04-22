@@ -40,12 +40,12 @@ public class LevelManager : MonoBehaviour {
 			//go.transform.parent = GameObject.Find ("Canvas").transform; 
 			//go.transform.localScale = new Vector2 (3000, 350);
 
-			int chance = Random.Range (0, 8);
+			int chance = Random.Range (0, 5);
 			if (chance == 0) {
 				if (Random.Range (0, 2) == 0) {
-					plataforma1.GetComponent<Plataforma> ().movel = true;
+					plataforma1.GetComponent<Plataforma> ().setMovel ();
 				} else {
-					plataforma2.GetComponent<Plataforma> ().movel = true;
+					plataforma2.GetComponent<Plataforma> ().setMovel ();
 				}
 			} else if (chance == 1) {
 				if (Random.Range (0, 2) == 0) {

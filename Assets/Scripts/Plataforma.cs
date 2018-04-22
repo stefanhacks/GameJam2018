@@ -17,12 +17,31 @@ public class Plataforma : MonoBehaviour {
 		if (movel && !parede) {
 			this.transform.position = new Vector3 (posicaoInicial.x + Mathf.Sin (Time.time) * 2, posicaoInicial.y, posicaoInicial.z);
 		} else if(parede){
-			this.transform.position = posicaoAtual;
+			this.transform.position = posicaoInicial;
 		}
 	}
 
 	public void setInv () {
 		this.GetComponent<SpriteRenderer> ().enabled = false;
+	}
+
+	public void setMovel () {
+		if (Blitzkrieg.GetGameObjectXFromCenter (this.gameObject) > 0) {
+			this.transform.position =
+				new Vector3 (
+					Camera.main.ViewportToWorldPoint (new Vector3 (0.75f, 0, 0)).x,
+					this.transform.position.y,
+					this.transform.position.z
+				);
+		} else {
+			this.transform.position =
+				new Vector3 (
+					Camera.main.ViewportToWorldPoint (new Vector3 (0.25f, 0, 0)).x,
+					this.transform.position.y,
+					this.transform.position.z
+				);
+		}
+		this.movel = true;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
