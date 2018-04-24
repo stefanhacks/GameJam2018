@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114883929340703952}
   - component: {fileID: 114013266102354204}
   - component: {fileID: 61475090824880144}
+  - component: {fileID: 114271859324710948}
   m_Layer: 0
   m_Name: Plataforma
   m_TagString: Plataforma
@@ -130,6 +131,17 @@ MonoBehaviour:
   posicaoAtual: {x: 0, y: 0, z: 0}
   movel: 0
   parede: 0
+--- !u!114 &114271859324710948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780493877671838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2510d2349a2355442bbf9cf4563b6547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114883929340703952
 MonoBehaviour:
   m_ObjectHideFlags: 1
