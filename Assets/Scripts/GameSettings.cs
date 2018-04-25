@@ -7,7 +7,7 @@ public class GameSettings : MonoBehaviour
 {
 
 	public float velocidadeCamera, tempoSpawnPlataforma, velocidadePlayers, distanciaSpawnPlataforma, 
-	randomTempoSpawnPlatMin, randomTempoSpawnPlatMax, tempoSpawnChave;
+	randomTempoSpawnPlatMin, randomTempoSpawnPlatMax, tempoSpawnChaveMin, tempoSpawnChaveMax;
 
 	void Start ()
 	{

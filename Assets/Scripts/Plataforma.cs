@@ -6,10 +6,13 @@ public class Plataforma : MonoBehaviour
 {
 	private Vector3 posicaoInicial, posicaoAtual;
 	private bool movel = false, parede = false;
+	private GameObject target = null;
+	private Vector3 offset;
 
 	void Start ()
 	{
 		posicaoInicial = this.transform.position;
+		target = null;
 	}
 
 	void Update ()
@@ -51,6 +54,24 @@ public class Plataforma : MonoBehaviour
 		if (col.gameObject.tag == "Paredes") {
 			this.posicaoAtual = this.transform.position;
 			parede = !parede;
+		}
+	}
+
+	void OnTriggerStay2D (Collider2D col)
+	{
+		target = col.gameObject;
+		offset = target.transform.position - transform.position;
+	}
+
+	void OnTriggerExit2D (Collider2D col)
+	{
+		target = null;
+	}
+
+	void LateUpdate ()
+	{
+		if (target != null) {
+			target.transform.position = transform.position + offset;
 		}
 	}
 }

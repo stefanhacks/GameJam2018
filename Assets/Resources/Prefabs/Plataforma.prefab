@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 114883929340703952}
   - component: {fileID: 114013266102354204}
   - component: {fileID: 61475090824880144}
-  - component: {fileID: 114271859324710948}
   m_Layer: 0
   m_Name: Plataforma
   m_TagString: Plataforma
@@ -80,7 +79,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.00000011920929}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.03, y: 0.02, z: 0.04, w: 0.03}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.5, y: 0.64}
     newSize: {x: 1.5, y: 0.64}
@@ -105,7 +104,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.03, y: 0.02, z: 0.04, w: 0.03}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.5, y: 0.64}
     newSize: {x: 1.5, y: 0.64}
@@ -125,21 +124,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12f9cc94fb18d8942a9eb0d298f2a096, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  posicaoInicial: {x: 0, y: 0, z: 0}
-  posicaoAtual: {x: 0, y: 0, z: 0}
-  movel: 0
-  parede: 0
---- !u!114 &114271859324710948
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1780493877671838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2510d2349a2355442bbf9cf4563b6547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114883929340703952

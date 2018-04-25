@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorController : MonoBehaviour {
+public class AnimatorController : MonoBehaviour
+{
+	private GameManager gM;
 
-    private GameManager gm;
+	private void Start ()
+	{
+		gM = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+	}
 
-    private void Start()
-    {
-        gm = GameObject.Find ("GameManager").GetComponent<GameManager>();
-    }
-
-    public void highFiveEnd ()
-    {
-        gm.proceedGameWin();
-    }
+	public void highFiveEnd ()
+	{
+		gM.proceedGameWin ();
+	}
 }

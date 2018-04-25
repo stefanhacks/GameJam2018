@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
 
 	private GameObject plataforma, chave;
 	private Transform canvas;
-	private float posicaox;
+	public float posicaox, tempoSpawnPlataforma, tempoSpawnChave;
 	private Vector3 distancia;
 	private GameSettings gS;
 	private GameManager gM;
@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
 		//Loading Resources
 		plataforma2Sprite = Resources.Load <Sprite> ("Graphics/Images/PlatPink");
 		plataforma = Resources.Load ("Prefabs/Plataforma") as GameObject;
-		chave = Resources.Load ("Prefabs/Plataforma") as GameObject;
+		chave = Resources.Load ("Prefabs/Key") as GameObject;
 
 		//Finding References
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
@@ -28,20 +28,20 @@ public class LevelManager : MonoBehaviour
 
 		distancia.y = canvas.transform.position.y - gS.distanciaSpawnPlataforma;
 		InvokeRepeating ("CriarPlataforma", gS.tempoSpawnPlataforma - 1, gS.tempoSpawnPlataforma);
-		posicaox = Random.Range (-2, -6);
-		gS.tempoSpawnChave = Random.Range (8, 15);
+		posicaox = Random.Range (-2, -7);
+		tempoSpawnChave = Random.Range (gS.tempoSpawnChaveMin, gS.tempoSpawnChaveMax);
 	}
 
 	void Update ()
 	{
-		gS.tempoSpawnChave -= Time.deltaTime;
+		tempoSpawnChave -= Time.deltaTime;
 	}
 
 	void CriarPlataforma ()
 	{
 		if (!gM.venceu) {
 			posicaox = Random.Range (-2, -7);
-			gS.distanciaSpawnPlataforma = Random.Range (gS.randomTempoSpawnPlatMin, gS.randomTempoSpawnPlatMax);
+			tempoSpawnPlataforma = Random.Range (gS.randomTempoSpawnPlatMin, gS.randomTempoSpawnPlatMax);
 			GameObject plataforma1 = Instantiate (plataforma, new Vector3 (posicaox, distancia.y - gS.distanciaSpawnPlataforma, 0), Quaternion.identity) as GameObject;
 			distancia = plataforma1.transform.position;
 
@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
 				}
 			}
 
-			if (gS.tempoSpawnChave <= 0) {
+			if (tempoSpawnChave <= 0) {
 				int escolha = Random.Range (0, 2);
 				if (escolha == 1) {
 					int escolhaY = Random.Range (0, 2);
@@ -109,7 +109,7 @@ public class LevelManager : MonoBehaviour
 						key2.GetComponent<SpriteRenderer> ().enabled = false;
 					}
 				}
-				gS.tempoSpawnChave = Random.Range (5, 10);
+				tempoSpawnChave = Random.Range (gS.tempoSpawnChaveMin, gS.tempoSpawnChaveMax);
 			}			 
 		}
 	}

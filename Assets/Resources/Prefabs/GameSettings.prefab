@@ -53,16 +53,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidadeCamera: 0
   tempoSpawnPlataforma: 2
-  tempoSpawnPlataformaInv: 0
   velocidadePlayers: 5
-  tempoJogo: 0
-  alturaPlayers: 0
-  velocidadeParedeMeio: 0.01
   distanciaSpawnPlataforma: 5
   randomTempoSpawnPlatMin: 3
   randomTempoSpawnPlatMax: 6
-  textoTempo: {fileID: 0}
-  textoMetros: {fileID: 0}
-  player: []
-  posicaoPlayerInicial: {x: 0, y: 0, z: 0}
-  moveCamera: 1
+  tempoSpawnChave: 0

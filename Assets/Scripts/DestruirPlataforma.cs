@@ -18,5 +18,8 @@ public class DestruirPlataforma : MonoBehaviour {
 		if (other.gameObject.tag == "Plataforma") {
 			Destroy (other.gameObject);
 		}
+		if (other.gameObject.tag == "Chave") {
+			Destroy (other.gameObject);
+		}
 	}
 }

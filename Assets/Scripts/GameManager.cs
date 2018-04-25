@@ -67,6 +67,12 @@ public class GameManager : MonoBehaviour
 		textoTempo.text = (tempoJogo.ToString ("0" + " s"));
 		textoMetros.text = (alturaPlayers.ToString ("0" + " m"));
 
+		//CHEAT TO WIN
+		if (Input.GetKeyDown (KeyCode.K)) {
+			quantidadeChave = 3;
+		}
+
+
 		if (currentState == GameState.Readying) {
 			Slow ();
 		} else if (currentState == GameState.Playing) {
@@ -74,8 +80,11 @@ public class GameManager : MonoBehaviour
 			if (quantidadeChave == 1) {
 				chaveSlot.transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite = chaveImg;
 			} else if (quantidadeChave == 2) {
+				chaveSlot.transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite = chaveImg;
 				chaveSlot.transform.GetChild (1).GetComponent<SpriteRenderer> ().sprite = chaveImg;
-			} else if (quantidadeChave == 3) {
+			} else if (quantidadeChave >= 3) {
+				chaveSlot.transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite = chaveImg;
+				chaveSlot.transform.GetChild (1).GetComponent<SpriteRenderer> ().sprite = chaveImg;
 				chaveSlot.transform.GetChild (2).GetComponent<SpriteRenderer> ().sprite = chaveImg;
 			}
 
