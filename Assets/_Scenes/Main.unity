@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 248061260}
   - component: {fileID: 248061263}
   m_Layer: 5
-  m_Name: GameOverNeon
+  m_Name: TextoGameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -886,6 +886,21 @@ Prefab:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1128933528}
+    - target: {fileID: 114973574256233732, guid: 23e51ae91536ab34686072b5e4aae886,
+        type: 2}
+      propertyPath: plataforma
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114973574256233732, guid: 23e51ae91536ab34686072b5e4aae886,
+        type: 2}
+      propertyPath: chave
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114973574256233732, guid: 23e51ae91536ab34686072b5e4aae886,
+        type: 2}
+      propertyPath: plataforma2Sprite
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 23e51ae91536ab34686072b5e4aae886, type: 2}
   m_IsPrefabParent: 0
@@ -1241,10 +1256,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6090f87a9288b449b8eac19aab7a9b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keySound: {fileID: 8300000, guid: fb533fd52d0903c4688a160285e2f072, type: 3}
-  deathSound: {fileID: 0}
   currentPlayer: 1
   movementEnabled: 0
+  posicaoPlayerInicial: {x: 0, y: 0, z: 0}
 --- !u!61 &822574086
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1535,7 +1549,7 @@ GameObject:
   - component: {fileID: 929711968}
   - component: {fileID: 929711967}
   m_Layer: 5
-  m_Name: PressButtonText (1)
+  m_Name: TextoPressEsc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1627,12 +1641,12 @@ GameObject:
   - component: {fileID: 939463812}
   - component: {fileID: 939463811}
   m_Layer: 5
-  m_Name: VictoryNeon
+  m_Name: TextoVitoria
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &939463810
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2123,7 +2137,7 @@ GameObject:
   - component: {fileID: 1248130981}
   - component: {fileID: 1248130980}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: TextoScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3400,10 +3414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6090f87a9288b449b8eac19aab7a9b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keySound: {fileID: 8300000, guid: fb533fd52d0903c4688a160285e2f072, type: 3}
-  deathSound: {fileID: 0}
   currentPlayer: 0
   movementEnabled: 0
+  posicaoPlayerInicial: {x: 0, y: 0, z: 0}
 --- !u!95 &1847813835
 Animator:
   serializedVersion: 3
@@ -3513,7 +3526,7 @@ GameObject:
   - component: {fileID: 1964110230}
   - component: {fileID: 1964110232}
   m_Layer: 5
-  m_Name: PressButtonText
+  m_Name: TextoPressSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3640,32 +3653,32 @@ Prefab:
         type: 2}
       propertyPath: textoSlow
       value: 
-      objectReference: {fileID: 1617373032}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: painelGameOver
       value: 
-      objectReference: {fileID: 2121042870}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: textoGameOver
       value: 
-      objectReference: {fileID: 248061258}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: textoWin
       value: 
-      objectReference: {fileID: 939463809}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: textoScore
       value: 
-      objectReference: {fileID: 1248130978}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: textoTempoSlow
       value: 
-      objectReference: {fileID: 1617373034}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: tempoSlow
@@ -3675,17 +3688,22 @@ Prefab:
         type: 2}
       propertyPath: music
       value: 
-      objectReference: {fileID: 8300000, guid: 39bc14065bf2720458a94cf6cd8cb74f, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: deathSound
       value: 
-      objectReference: {fileID: 8300000, guid: ca51ee3ee9127d84781f80e27d6f9701, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
         type: 2}
       propertyPath: victorySound
       value: 
-      objectReference: {fileID: 8300000, guid: 0d629f7e22d4b474b82d34a9c638c128, type: 3}
+      objectReference: {fileID: 0}
+    - target: {fileID: 114567171144058826, guid: 4efe0ad94412740499924846aee84f5a,
+        type: 2}
+      propertyPath: chaveImg
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4efe0ad94412740499924846aee84f5a, type: 2}
   m_IsPrefabParent: 0
@@ -3807,12 +3825,12 @@ GameObject:
   - component: {fileID: 2121042872}
   - component: {fileID: 2121042874}
   m_Layer: 5
-  m_Name: GameOverPainel
+  m_Name: PainelGameOver
   m_TagString: GameOverPainel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2121042871
 RectTransform:
   m_ObjectHideFlags: 0

@@ -4,94 +4,118 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
 	private GameObject[] player, plataformas;
-	private GameObject chaveSlot, final, highFive;
-    private AudioSource audioManager, audioSource;
-	public AudioClip music;
-	public GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore;
-	public float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar;
-	public Text textoTempoSlow;
-	public bool morreu = false;
-	public Sprite chaveImg;
+	private GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore, chaveSlot, final, highFive;
+	private float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar, tempoJogo, alturaPlayers, pontuacaoFinal, tempoFinal;
+	private bool morreu = false, comecou = false;
+	private GameSettings gS;
+	private MainCameraController mCC;
 
-	public enum GameState {
+	public enum GameState
+	{
 		Readying,
 		Playing,
 		GameOver
 	}
 
 	public GameState currentState = GameState.Readying;
-	public bool comecou = false;
-	private GameSettings gS;
+	private AudioSource audioManager, audioSource;
+	private AudioClip deathSound, victorySound, music;
+	private Text textoTempo, textoMetros;
+	private Sprite chaveImg;
 
-	public AudioClip deathSound, victorySound;
+	public bool venceu = false;
+	public bool fim = false;
+	public int quantidadeChave;
 
-	void Start () {
+	void Start ()
+	{
+		//Loading Resources
+		deathSound = Resources.Load<AudioClip> ("Musics/TopsToques-NaveEspacial8bitEfeitoSonoro");
+		victorySound = Resources.Load<AudioClip> ("Musics/MyInstants-HellYeah");
+		music = Resources.Load<AudioClip> ("Musics/DarkLight-Vodovoz");
+		chaveImg = Resources.Load <Sprite> ("Graphics/Images/Key");
+
+		//Finding References
 		player = GameObject.FindGameObjectsWithTag ("Player");
 		chaveSlot = GameObject.FindGameObjectWithTag ("ChaveSlot");
-        highFive = GameObject.FindGameObjectWithTag ("High5");
+		highFive = GameObject.FindGameObjectWithTag ("High5");
 		final = GameObject.FindGameObjectWithTag ("Final");
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
+		mCC = GameObject.Find ("MainCamera").GetComponent<MainCameraController> ();
 		audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioSource> ();
-		audioManager.clip = music;
 		audioSource = this.GetComponent<AudioSource> ();
-		gS.posicaoPlayerInicial.y = transform.position.y;
+		audioManager.clip = music;
+		textoTempo = GameObject.Find ("Canvas/TextoTempo").GetComponent<Text> ();
+		textoMetros = GameObject.Find ("Canvas/TextoMetros").GetComponent<Text> ();
+		textoSlow = GameObject.Find ("Canvas/TextoTempoSlow");
+		painelGameOver = GameObject.Find ("Canvas/PainelGameOver");
+		textoGameOver = GameObject.Find ("Canvas/PainelGameOver/TextoGameOver");
+		textoWin = GameObject.Find ("Canvas/PainelGameOver/TextoVitoria");
+		textoScore = GameObject.Find ("Canvas/PainelGameOver/TextoScore");
 
+		painelGameOver.SetActive (false);
+		textoWin.SetActive (false);
 	}
 
 
-	void Update () {
+	void Update ()
+	{
+		textoTempo.text = (tempoJogo.ToString ("0" + " s"));
+		textoMetros.text = (alturaPlayers.ToString ("0" + " m"));
+
 		if (currentState == GameState.Readying) {
 			Slow ();
-        } else if (currentState == GameState.Playing)
-        {
+		} else if (currentState == GameState.Playing) {
 			checarAltura ();
-			if (gS.quantidadeChave == 1) {
-				chaveSlot.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = chaveImg;
-			} else if (gS.quantidadeChave == 2) {
-				chaveSlot.transform.GetChild(1).GetComponent<SpriteRenderer> ().sprite = chaveImg;
-			} else if (gS.quantidadeChave == 3) {
-				chaveSlot.transform.GetChild(2).GetComponent<SpriteRenderer> ().sprite = chaveImg;
+			if (quantidadeChave == 1) {
+				chaveSlot.transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite = chaveImg;
+			} else if (quantidadeChave == 2) {
+				chaveSlot.transform.GetChild (1).GetComponent<SpriteRenderer> ().sprite = chaveImg;
+			} else if (quantidadeChave == 3) {
+				chaveSlot.transform.GetChild (2).GetComponent<SpriteRenderer> ().sprite = chaveImg;
 			}
 
-			plataformas = GameObject.FindGameObjectsWithTag("Plataforma");
-			if (!gS.venceu) {
+			plataformas = GameObject.FindGameObjectsWithTag ("Plataforma");
+			if (!venceu) {
 				checkDeath (player [0]);
 				checkDeath (player [1]);
 			}
-			if (gS.moveCamera) {
-				gS.tempoJogo += Time.deltaTime;
+			if (mCC.moveCamera) {
+				tempoJogo += Time.deltaTime;
 			}
 
-			if (gS.quantidadeChave >=3) {
+			if (quantidadeChave >= 3) {
 				Vencer ();
-				gS.venceu = true;
+				venceu = true;
 			}
 		} else if (currentState == GameState.GameOver) {
-			gS.pontuacaoFinal = (gS.tempoJogo * 100 + gS.alturaPlayers * 200 + gS.quantidadeChave * 300) / 3;
-			textoScore.GetComponent<Text> ().text = ("Score:\n" + gS.pontuacaoFinal.ToString("f0"));
+			pontuacaoFinal = (tempoJogo * 100 + alturaPlayers * 200 + quantidadeChave * 300) / 3;
+			textoScore.GetComponent<Text> ().text = ("Score:\n" + pontuacaoFinal.ToString ("f0"));
 		}
 	}
 
-	void Slow () {
+	void Slow ()
+	{
 		if (tempoSlow > 1) {
 			Time.timeScale = 0.1f;
 			textoSlow.SetActive (true);
-			textoTempoSlow.text = "" + tempoSlow.ToString ("f0");
+			textoSlow.GetComponent<Text> ().text = "" + tempoSlow.ToString ("f0");
 		}
 
 		if (tempoSlow <= 0 && tempoSlow >= -1) {
-			textoTempoSlow.text = "GO";
+			textoSlow.GetComponent<Text> ().text = "GO";
 		}
 
 		if (tempoSlow < -1) {
 			Time.timeScale = 1;
 			textoSlow.SetActive (false);
 			currentState = GameState.Playing;
-			player[0].GetComponent<PlayerController> ().movementEnabled = true;
-			player[1].GetComponent<PlayerController> ().movementEnabled = true;
+			player [0].GetComponent<PlayerController> ().movementEnabled = true;
+			player [1].GetComponent<PlayerController> ().movementEnabled = true;
 			audioManager.Play ();
 		}
 	
@@ -99,7 +123,8 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	void checkDeath (GameObject play) {
+	void checkDeath (GameObject play)
+	{
 		if (morreu) {
 			tempoMorte += Time.deltaTime;
 		}
@@ -113,67 +138,63 @@ public class GameManager : MonoBehaviour {
 
 		if (Blitzkrieg.GetGameObjectPosition (play).y < 0 || Blitzkrieg.GetGameObjectPosition (play).y > 1) {
 			morreu = true;
-			if (gS.moveCamera) {
+			if (mCC.moveCamera) {
 				play.transform.GetChild (0).gameObject.SetActive (true);
 
 				audioSource.clip = deathSound;
 				audioSource.Play ();
 			}
-
-
-			gS.moveCamera = false;
+			mCC.moveCamera = false;
 			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-			player[0].GetComponent<PlayerController> ().movementEnabled = false;
-			player[1].GetComponent<PlayerController> ().movementEnabled = false;
+			player [0].GetComponent<PlayerController> ().movementEnabled = false;
+			player [1].GetComponent<PlayerController> ().movementEnabled = false;
 			foreach (GameObject plataformas in plataformas) {
 				if (plataformas.GetComponent<SpriteRenderer> ().enabled == false) {
 					plataformas.GetComponent<SpriteRenderer> ().enabled = true;
 					plataformas.GetComponent<ColorChange> ().enabled = true;
 				}
 			}
-
 		}
 	}
 
 	void Vencer ()
-    {
-        foreach (GameObject plataformas in plataformas) {
+	{
+		foreach (GameObject plataformas in plataformas) {
 			Vector2 distanciaP1 = new Vector2 (0, plataformas.transform.position.y - final.transform.position.y);
 			Vector2 distanciaP2 = new Vector2 (0, plataformas.transform.position.y - final.transform.position.y);
-			if (distanciaP1.y <= 2 || distanciaP2.y <=2) {
+			if (distanciaP1.y <= 2 || distanciaP2.y <= 2) {
 				Destroy (plataformas);
 			}
 		}
-		gS.velocidadeParedeMeio = 0.068f;
+		tempoFinal = 0.068f;
 		tempoFinalizar += Time.deltaTime;
 
 		if (tempoFinalizar < 4) {
-			final.transform.Translate (0, gS.velocidadeParedeMeio / 4, 0);
+			final.transform.Translate (0, tempoFinal / 4, 0);
 		}
 
-		if (tempoFinalizar >= 4){
-			gS.moveCamera = false;
+		if (tempoFinalizar >= 4) {
+			mCC.moveCamera = false;
 		}
 
-		if (gS.fim)
-        {
-            highFive.GetComponent<Animator>().Play("Hi5");
-        }
-
+		if (fim) {
+			highFive.GetComponent<Animator> ().Play ("Hi5");
+		}
 	}
 
-    public void proceedGameWin ()
-    {
-        textoGameOver.SetActive(false);
-        textoWin.SetActive(true);
-        painelGameOver.SetActive(true);
-        currentState = GameState.GameOver;
+	public void proceedGameWin ()
+	{
+		textoGameOver.SetActive (false);
+		textoWin.SetActive (true);
+		painelGameOver.SetActive (true);
+		currentState = GameState.GameOver;
 		audioSource.clip = victorySound;
 		audioSource.Play ();
-    }
+	}
 
-	public void buttonPressed (KeyCode keyPressed) {
+	public void buttonPressed (KeyCode keyPressed)
+	{
 		if (keyPressed == KeyCode.Space && currentState == GameState.GameOver) {
 			audioManager.Stop ();
 			SceneManager.LoadScene (1);
@@ -185,14 +206,12 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void checarAltura(){
-		//	gS.alturaPlayers = gS.posicaoPlayerInicial.y + player[1].transform.position.y * -1;
-
+	public void checarAltura ()
+	{
 		if (player [0].transform.position.y > player [1].transform.position.y) {
-			gS.alturaPlayers = (player [1].transform.position.y - gS.posicaoPlayerInicial.y) * -1;
+			alturaPlayers = (player [1].transform.position.y - player [1].GetComponent<PlayerController> ().posicaoPlayerInicial.y) * -1;
 		} else {
-			gS.alturaPlayers = (player [0].transform.position.y - gS.posicaoPlayerInicial.y) * -1;
+			alturaPlayers = (player [0].transform.position.y - player [0].GetComponent<PlayerController> ().posicaoPlayerInicial.y) * -1;
 		}
 	}
-
 }

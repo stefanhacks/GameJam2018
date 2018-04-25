@@ -2,35 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-
-	Rigidbody2D rb;
-
-	public enum PlayerType {
+public class PlayerController : MonoBehaviour
+{
+	
+	public enum PlayerType
+	{
 		PlayerOne,
 		PlayerTwo
 	}
 
-	public AudioClip keySound, deathSound;
 	public PlayerType currentPlayer = PlayerType.PlayerOne;
-	public bool movementEnabled = false;
 
+	private Rigidbody2D rb;
+	private Animator animator;
+	public bool movementEnabled = false;
 	private float moveHorizontal;
 	private bool ladoD = true;
+	private GameManager gM;
 	private GameSettings gS;
-	private Animator animator;
-
 	private GameObject[] chaves;
+	private AudioClip keySound;
 
-	// Use this for initialization
-	void Start () {
+	public Vector3 posicaoPlayerInicial;
+
+	void Start ()
+	{
+		//Loading Resources
+		keySound = Resources.Load<AudioClip> ("Musics/PickKey-Shnur");
+
+		//Finding References
 		rb = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator> ();
+		gM = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
-		gS.posicaoPlayerInicial.y = transform.position.y;
+		posicaoPlayerInicial.y = transform.position.y;
 	}
 
-	void Update () {
+	void Update ()
+	{
 		if (currentPlayer == PlayerType.PlayerOne && movementEnabled) {
 			moveHorizontal = Input.GetAxis ("HorizontalP1");
 
@@ -47,29 +56,32 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate ()
+	{
 		rb.velocity = new Vector2 (moveHorizontal * gS.velocidadePlayers, 0);
 	}
 
-	private void Flip (float horizontal) {
+	private void Flip (float horizontal)
+	{
 		if (horizontal > 0 && !ladoD || horizontal < 0 && ladoD) {
 			TrocarDirecao ();
 		}
 	}
 
-	public void TrocarDirecao () {
+	public void TrocarDirecao ()
+	{
 		ladoD = !ladoD;
 		transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y * 1, transform.localScale.z * 1);
 	}
 
-	void OnTriggerEnter2D(Collider2D col){
+	void OnTriggerEnter2D (Collider2D col)
+	{
 		if (col.gameObject.tag == "Chave") {
 			chaves = GameObject.FindGameObjectsWithTag ("Chave");
 			foreach (GameObject chaves in chaves) {
-				Destroy(chaves);
+				Destroy (chaves);
 			}
-			gS.quantidadeChave++;
+			gM.quantidadeChave++;
 
 			AudioSource audioSource = this.GetComponent<AudioSource> ();
 			audioSource.clip = keySound;
@@ -77,7 +89,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (col.gameObject.tag == "Porta") {
-			gS.fim = true;
+			gM.fim = true;
 		}
 	}
 }

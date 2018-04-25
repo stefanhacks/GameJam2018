@@ -2,33 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class LevelManager : MonoBehaviour {
 
-	public GameObject plataforma, chave;
-	public Transform canvas;
-	public float posicaox;
+public class LevelManager : MonoBehaviour
+{
 
+	private GameObject plataforma, chave;
+	private Transform canvas;
+	private float posicaox;
 	private Vector3 distancia;
-
 	private GameSettings gS;
+	private GameManager gM;
+	private Sprite plataforma2Sprite;
 
-	public Sprite plataforma2Sprite;
-	// Use this for initialization
-	void Start () {
-		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings>();
-		InvokeRepeating ("CriarPlataforma", gS.tempoSpawnPlataforma -1, gS.tempoSpawnPlataforma);
-		posicaox = Random.Range(-2, -6);
+	void Start ()
+	{
+		//Loading Resources
+		plataforma2Sprite = Resources.Load <Sprite> ("Graphics/Images/PlatPink");
+		plataforma = Resources.Load ("Prefabs/Plataforma") as GameObject;
+		chave = Resources.Load ("Prefabs/Plataforma") as GameObject;
+
+		//Finding References
+		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
+		gM = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		canvas = GameObject.Find ("Canvas").GetComponent<Transform> ();  
+
 		distancia.y = canvas.transform.position.y - gS.distanciaSpawnPlataforma;
+		InvokeRepeating ("CriarPlataforma", gS.tempoSpawnPlataforma - 1, gS.tempoSpawnPlataforma);
+		posicaox = Random.Range (-2, -6);
 		gS.tempoSpawnChave = Random.Range (8, 15);
 	}
 
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		gS.tempoSpawnChave -= Time.deltaTime;
 	}
 
-	void CriarPlataforma(){
-		if (!gS.venceu) {
+	void CriarPlataforma ()
+	{
+		if (!gM.venceu) {
 			posicaox = Random.Range (-2, -7);
 			gS.distanciaSpawnPlataforma = Random.Range (gS.randomTempoSpawnPlatMin, gS.randomTempoSpawnPlatMax);
 			GameObject plataforma1 = Instantiate (plataforma, new Vector3 (posicaox, distancia.y - gS.distanciaSpawnPlataforma, 0), Quaternion.identity) as GameObject;
@@ -37,8 +48,6 @@ public class LevelManager : MonoBehaviour {
 			Vector3 posicao2y = new Vector3 (posicaox * -1, plataforma1.transform.position.y, 0);
 			GameObject plataforma2 = Instantiate (plataforma, posicao2y, Quaternion.identity) as GameObject;
 			plataforma2.GetComponent<SpriteRenderer> ().sprite = plataforma2Sprite;
-			//go.transform.parent = GameObject.Find ("Canvas").transform; 
-			//go.transform.localScale = new Vector2 (3000, 350);
 
 			int chance = Random.Range (0, 5);
 			if (chance == 0) {
@@ -54,7 +63,6 @@ public class LevelManager : MonoBehaviour {
 					plataforma2.GetComponent<Plataforma> ().setInv ();
 				}
 			}
-
 
 			if (gS.tempoSpawnChave <= 0) {
 				int escolha = Random.Range (0, 2);
@@ -80,7 +88,6 @@ public class LevelManager : MonoBehaviour {
 						key2.GetComponent<SpriteRenderer> ().enabled = false;
 					}
 				} else {
-
 					int escolhaY = Random.Range (0, 2);
 					if (escolhaY == 1) {
 						float randomx = Random.Range (-3, 3);

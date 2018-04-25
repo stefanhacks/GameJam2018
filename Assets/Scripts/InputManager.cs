@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour {
 
-    public GameObject gm;
+    private GameObject gM;
 
 	void Start () {
-		
+		//Finding References
+		gM = GameObject.Find ("GameManager");
 	}
 	
 	
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            gm.GetComponent<GameManager>().buttonPressed(KeyCode.Space);
+            gM.GetComponent<GameManager>().buttonPressed(KeyCode.Space);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gm.GetComponent<GameManager>().buttonPressed(KeyCode.Escape);
+            gM.GetComponent<GameManager>().buttonPressed(KeyCode.Escape);
         }
 
     }
