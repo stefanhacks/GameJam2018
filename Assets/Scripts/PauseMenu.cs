@@ -20,6 +20,8 @@ public class PauseMenu : MonoBehaviour
 		tempo.SetActive (false);
 	}
 
+
+
 	void Update ()
 	{
 		if (gM.currentState == GameManager.GameState.Playing) {
@@ -77,8 +79,7 @@ public class PauseMenu : MonoBehaviour
 	public void Restart ()
 	{
 		Time.timeScale = 1;
-		SceneManager.LoadScene (2);
-
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
 	public void ExitGame ()

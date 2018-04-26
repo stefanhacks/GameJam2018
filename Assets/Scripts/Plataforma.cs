@@ -5,7 +5,7 @@ using UnityEngine;
 public class Plataforma : MonoBehaviour
 {
 	private Vector3 posicaoInicial, posicaoAtual;
-	private bool movel = false, parede = false;
+	private bool movel = false;
 	private GameObject target = null;
 	private Vector3 offset;
 
@@ -17,10 +17,8 @@ public class Plataforma : MonoBehaviour
 
 	void Update ()
 	{
-		if (movel && !parede) {
+		if (movel) {
 			this.transform.position = new Vector3 (posicaoInicial.x + Mathf.Sin (Time.time) * 2, posicaoInicial.y, posicaoInicial.z);
-		} else if (parede) {
-			this.transform.position = posicaoInicial;
 		}
 	}
 
@@ -47,14 +45,6 @@ public class Plataforma : MonoBehaviour
 			);
 		}
 		this.movel = true;
-	}
-
-	void OnTriggerEnter2D (Collider2D col)
-	{
-		if (col.gameObject.tag == "Paredes") {
-			this.posicaoAtual = this.transform.position;
-			parede = !parede;
-		}
 	}
 
 	void OnTriggerStay2D (Collider2D col)

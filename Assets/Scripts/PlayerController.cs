@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 	private GameSettings gS;
 	private GameObject[] chaves;
 	private AudioClip keySound;
+	private GameObject tiro;
 
 	public Vector3 posicaoPlayerInicial;
 
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
 		gM = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		gS = GameObject.Find ("GameSettings").GetComponent<GameSettings> ();
 		posicaoPlayerInicial.y = transform.position.y;
+
+		tiro = Resources.Load ("Prefabs/Key") as GameObject;
 	}
 
 	void Update ()
@@ -52,8 +55,12 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool ("andando", true);
 		} else {
 			animator.SetBool ("andando", false);
-		}
+		}			
 
+		// INICIO TIRO
+		if (Input.GetButtonDown("Fire1")){
+			Instantiate(tiro, transform.position, transform.rotation);
+		}
 	}
 
 	void FixedUpdate ()
