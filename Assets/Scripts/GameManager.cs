@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
 
 	private GameObject[] player, plataformas;
-	private GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore, chaveSlot, final, highFive;
+	public GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore, chaveSlot, final, highFive;
 	private float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar, tempoJogo, alturaPlayers, pontuacaoFinal, tempoFinal;
 	private bool morreu = false, comecou = false;
 	private GameSettings gS;
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
+
 		//Loading Resources
 		deathSound = Resources.Load<AudioClip> ("Musics/TopsToques-NaveEspacial8bitEfeitoSonoro");
 		victorySound = Resources.Load<AudioClip> ("Musics/MyInstants-HellYeah");
@@ -61,9 +62,9 @@ public class GameManager : MonoBehaviour
 		textoWin.SetActive (false);
 	}
 
-
 	void Update ()
 	{
+
 		textoTempo.text = (tempoJogo.ToString ("0" + " s"));
 		textoMetros.text = (alturaPlayers.ToString ("0" + " m"));
 
@@ -144,30 +145,31 @@ public class GameManager : MonoBehaviour
 			painelGameOver.SetActive (true);
 			currentState = GameState.GameOver;
 		}
+		if (play != null) {
+			if (Blitzkrieg.GetGameObjectPosition (play).y < 0 || Blitzkrieg.GetGameObjectPosition (play).y > 1) {
+				morreu = true;
+				if (mCC.moveCamera) {
+					play.transform.GetChild (0).gameObject.SetActive (true);
 
-		if (Blitzkrieg.GetGameObjectPosition (play).y < 0 || Blitzkrieg.GetGameObjectPosition (play).y > 1) {
-			morreu = true;
-			if (mCC.moveCamera) {
-				play.transform.GetChild (0).gameObject.SetActive (true);
-
-				audioSource.clip = deathSound;
-				audioSource.Play ();
-			}
-			mCC.moveCamera = false;
-			player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-			player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-			player [0].GetComponent<PlayerController> ().movementEnabled = false;
-			player [1].GetComponent<PlayerController> ().movementEnabled = false;
-			foreach (GameObject plataformas in plataformas) {
-				if (plataformas.GetComponent<SpriteRenderer> ().enabled == false) {
-					plataformas.GetComponent<SpriteRenderer> ().enabled = true;
-					plataformas.GetComponent<ColorChange> ().enabled = true;
+					audioSource.clip = deathSound;
+					audioSource.Play ();
+				}
+				mCC.moveCamera = false;
+				player [0].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+				player [1].GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+				player [0].GetComponent<PlayerController> ().movementEnabled = false;
+				player [1].GetComponent<PlayerController> ().movementEnabled = false;
+				foreach (GameObject plataformas in plataformas) {
+					if (plataformas.GetComponent<SpriteRenderer> ().enabled == false) {
+						plataformas.GetComponent<SpriteRenderer> ().enabled = true;
+						plataformas.GetComponent<ColorChange> ().enabled = true;
+					}
 				}
 			}
 		}
 	}
 
-	void Vencer ()
+	public void Vencer ()
 	{
 		foreach (GameObject plataformas in plataformas) {
 			Vector2 distanciaP1 = new Vector2 (0, plataformas.transform.position.y - final.transform.position.y);
@@ -206,7 +208,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (keyPressed == KeyCode.Space && currentState == GameState.GameOver) {
 			audioManager.Stop ();
-			SceneManager.LoadScene (1);
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 		if (keyPressed == KeyCode.Escape && currentState == GameState.GameOver) {
 			audioManager.Stop ();
@@ -217,10 +219,12 @@ public class GameManager : MonoBehaviour
 
 	public void checarAltura ()
 	{
-		if (player [0].transform.position.y > player [1].transform.position.y) {
-			alturaPlayers = (player [1].transform.position.y - player [1].GetComponent<PlayerController> ().posicaoPlayerInicial.y) * -1;
-		} else {
-			alturaPlayers = (player [0].transform.position.y - player [0].GetComponent<PlayerController> ().posicaoPlayerInicial.y) * -1;
+		if (player [0] != null && player [1] != null) {
+			if (player [0].transform.position.y > player [1].transform.position.y) {
+				alturaPlayers = (player [1].transform.position.y - player [1].GetComponent<PlayerController> ().posicaoPlayerInicial.y) * -1;
+			} else {
+				alturaPlayers = (player [0].transform.position.y - player [0].GetComponent<PlayerController> ().posicaoPlayerInicial.y) * -1;
+			}
 		}
 	}
 }

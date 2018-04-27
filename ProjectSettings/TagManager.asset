@@ -13,6 +13,7 @@ TagManager:
   - Porta
   - Final
   - High5
+  - GameManager
   layers:
   - Default
   - TransparentFX

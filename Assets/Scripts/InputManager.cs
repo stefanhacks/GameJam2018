@@ -9,8 +9,7 @@ public class InputManager : MonoBehaviour {
 	void Start () {
 		//Finding References
 		gM = GameObject.Find ("GameManager");
-	}
-	
+	}	
 	
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space)) {
