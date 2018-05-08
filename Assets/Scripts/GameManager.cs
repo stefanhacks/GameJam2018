@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 	private GameObject[] player, plataformas;
 	public GameObject textoSlow, painelGameOver, textoGameOver, textoWin, textoScore, chaveSlot, final, highFive;
 	private float tempoSlow = 3.5f, tempoMorte = 0, tempoFinalizar, tempoJogo, alturaPlayers, pontuacaoFinal, tempoFinal;
-	private bool morreu = false, comecou = false;
+	private bool morreu = false;
 	private GameSettings gS;
 	private MainCameraController mCC;
 
@@ -27,8 +27,7 @@ public class GameManager : MonoBehaviour
 	private Text textoTempo, textoMetros;
 	private Sprite chaveImg;
 
-	public bool venceu = false;
-	public bool fim = false;
+	public bool venceu = false, fim = false, comecou = false;
 	public int quantidadeChave;
 
 	void Start ()
@@ -75,6 +74,7 @@ public class GameManager : MonoBehaviour
 
 
 		if (currentState == GameState.Readying) {
+			comecou = true;
 			Slow ();
 		} else if (currentState == GameState.Playing) {
 			checarAltura ();

@@ -14,10 +14,10 @@ public class Tiro : MonoBehaviour {
 	{
 		if (other.gameObject != pai) {
 			if (other.gameObject.tag == "Player") {
-				Destroy (other.gameObject);
-				Destroy (this.gameObject);
 				gM = GameObject.FindGameObjectWithTag ("GameManager");
 				gM.GetComponent<GameManager> ().quantidadeChave = 3;
+				Destroy (other.gameObject);
+				Destroy (this.gameObject);
 			}
 		}
 
